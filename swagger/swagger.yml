@@ -1,0 +1,66 @@
+---
+swagger: "2.0"
+info:
+  description: Whatsapp communication API
+  title: Whats app integration
+  version: 1.0.0
+consumes:
+- application/io.goswagger.examples.todo-list.v1+json
+produces:
+- application/io.goswagger.examples.todo-list.v1+json
+- application/json
+schemes:
+- http
+paths:
+  /:
+    get:
+      tags:
+        - api
+      operationId: getMessages
+      parameters:
+        - name: since
+          in: query
+          type: integer
+          format: int64
+        - name: limit
+          in: query
+          type: integer
+          format: int32
+          default: 20
+      responses:
+        200:
+          description: just a test for igor
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/message"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/error"
+    
+definitions:
+  message:
+    type: object
+    required:
+      - body
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      body:
+        type: string
+        minLength: 1
+      processed:
+        type: boolean
+  error:
+    type: object
+    required:
+      - message
+    properties:
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
