@@ -12,10 +12,11 @@ type AppConfig struct {
 	Database *Database `json:"database,omitempty"`
 }
 
+var singleton *AppConfig
+
 // GetManagerAppConfig get singleton of  aplications config
 func GetManagerAppConfig() *AppConfig {
 	var once sync.Once
-	var singleton *AppConfig
 	once.Do(func() {
 		singleton = NewAppConfig()
 	})
@@ -23,9 +24,11 @@ func GetManagerAppConfig() *AppConfig {
 }
 
 // LoadConfiguration load configurations file
-func (a *AppConfig) LoadConfiguration(file string) AppConfig {
-	var config AppConfig
-	configFile, err := os.Open(file)
+func (a *AppConfig) LoadConfiguration(file string) *AppConfig {
+	var config *AppConfig
+
+	configFile, err := os.Open("appconfig.json")
+
 	defer configFile.Close()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -38,7 +41,6 @@ func (a *AppConfig) LoadConfiguration(file string) AppConfig {
 
 // NewAppConfig Create Aplication config
 func NewAppConfig() *AppConfig {
-	appConfig := AppConfig{}
-	appConfig.LoadConfiguration("appconfig.json")
-	return &appConfig
+	appConfig := &AppConfig{}
+	return appConfig.LoadConfiguration("./appconfig.json")
 }

@@ -1,6 +1,8 @@
 package provider
 
 import (
+	"log"
+
 	"go.uber.org/dig"
 	constants "o2b.com.br/whatsAppApi/domain/constants"
 	providerinterfaces "o2b.com.br/whatsAppApi/infrastructure/provider/interfaces"
@@ -30,9 +32,13 @@ func (p *ContainerProvider) Provide() *dig.Container {
 
 // Run EntryPoint
 func (p *ContainerProvider) Run(api *operations.WhatsAppAPIAPI) {
-	p.Provide().Invoke(func(server *server.Server) {
+	err := p.Provide().Invoke(func(server *server.Server) {
 		server.BindAPI(api).Controllers()
 	})
+
+	if err != nil {
+		log.Printf("%v", err)
+	}
 
 }
 

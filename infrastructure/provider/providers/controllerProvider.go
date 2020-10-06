@@ -12,7 +12,6 @@ type ControllerProvider struct {
 // Provide is a helper Ioc
 func (provider *ControllerProvider) Provide(container *dig.Container) {
 	container.Provide(controllers.NewWhatsAppController)
-	container.Provide(controllers.NewHandleController)
 }
 
 // NewControllerProvider IoC
