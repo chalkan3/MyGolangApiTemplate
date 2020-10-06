@@ -30,9 +30,10 @@ func (p *ContainerProvider) Provide() *dig.Container {
 
 // Run EntryPoint
 func (p *ContainerProvider) Run(api *operations.WhatsAppAPIAPI) {
-	p.Container.Invoke(func(server *server.Server) {
+	p.Provide().Invoke(func(server *server.Server) {
 		server.BindAPI(api).Controllers()
 	})
+
 }
 
 // NewIocProvider Create provider

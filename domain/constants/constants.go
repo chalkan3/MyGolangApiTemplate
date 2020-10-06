@@ -2,5 +2,5 @@ package constants
 
 const (
 	// NumberProviders Number of providers
-	NumberProviders = 8
+	NumberProviders = 7
 )
