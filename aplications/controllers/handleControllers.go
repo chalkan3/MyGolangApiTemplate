@@ -16,6 +16,10 @@ func (h *HandleController) Handle(api *operations.WhatsAppAPIAPI) {
 	api.APIGetMessagesHandler = apiops.GetMessagesHandlerFunc(func(params apiops.GetMessagesParams) middleware.Responder {
 		return h.whatsAppController.Get(params)
 	})
+
+	api.APISendMessageHandler = apiops.SendMessageHandlerFunc(func(params apiops.SendMessageParams) middleware.Responder {
+		return h.whatsAppController.CreateMessage(params)
+	})
 }
 
 // NewHandleController IoC

@@ -47,6 +47,9 @@ func NewWhatsAppAPIAPI(spec *loads.Document) *WhatsAppAPIAPI {
 		APIGetMessagesHandler: apiops.GetMessagesHandlerFunc(func(params apiops.GetMessagesParams) middleware.Responder {
 			return middleware.NotImplemented("operation api.GetMessages has not yet been implemented")
 		}),
+		APISendMessageHandler: apiops.SendMessageHandlerFunc(func(params apiops.SendMessageParams) middleware.Responder {
+			return middleware.NotImplemented("operation api.SendMessage has not yet been implemented")
+		}),
 	}
 }
 
@@ -75,6 +78,7 @@ type WhatsAppAPIAPI struct {
 
 	// JSONConsumer registers a consumer for the following mime types:
 	//   - application/io.goswagger.examples.todo-list.v1+json
+	//   - application/json
 	JSONConsumer runtime.Consumer
 
 	// JSONProducer registers a producer for the following mime types:
@@ -84,6 +88,8 @@ type WhatsAppAPIAPI struct {
 
 	// APIGetMessagesHandler sets the operation handler for the get messages operation
 	APIGetMessagesHandler apiops.GetMessagesHandler
+	// APISendMessageHandler sets the operation handler for the send message operation
+	APISendMessageHandler apiops.SendMessageHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -163,6 +169,9 @@ func (o *WhatsAppAPIAPI) Validate() error {
 	if o.APIGetMessagesHandler == nil {
 		unregistered = append(unregistered, "api.GetMessagesHandler")
 	}
+	if o.APISendMessageHandler == nil {
+		unregistered = append(unregistered, "api.SendMessageHandler")
+	}
 
 	if len(unregistered) > 0 {
 		return fmt.Errorf("missing registration: %s", strings.Join(unregistered, ", "))
@@ -194,6 +203,8 @@ func (o *WhatsAppAPIAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Co
 		switch mt {
 		case "application/io.goswagger.examples.todo-list.v1+json":
 			result["application/io.goswagger.examples.todo-list.v1+json"] = o.JSONConsumer
+		case "application/json":
+			result["application/json"] = o.JSONConsumer
 		}
 
 		if c, ok := o.customConsumers[mt]; ok {
@@ -257,6 +268,10 @@ func (o *WhatsAppAPIAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"][""] = apiops.NewGetMessages(o.context, o.APIGetMessagesHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/sendMessage"] = apiops.NewSendMessage(o.context, o.APISendMessageHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

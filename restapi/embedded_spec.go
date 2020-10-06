@@ -74,6 +74,39 @@ func init() {
           }
         }
       }
+    },
+    "/sendMessage": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "api"
+        ],
+        "operationId": "sendMessage",
+        "parameters": [
+          {
+            "description": "create a new message",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -167,6 +200,39 @@ func init() {
             "description": "generic error response",
             "schema": {
               "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/sendMessage": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "api"
+        ],
+        "operationId": "sendMessage",
+        "parameters": [
+          {
+            "description": "create a new message",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/message"
             }
           }
         }

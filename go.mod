@@ -10,6 +10,7 @@ require (
 	github.com/go-openapi/strfmt v0.19.5
 	github.com/go-openapi/swag v0.19.9
 	github.com/go-openapi/validate v0.19.11
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/jessevdk/go-flags v1.4.0
 	go.uber.org/dig v1.10.0
 	golang.org/x/net v0.0.0-20201002202402-0a1ea396d57c

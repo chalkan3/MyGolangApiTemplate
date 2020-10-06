@@ -1,0 +1,9 @@
+{
+    "database": {
+         "username": "root",    
+         "password": "root",    
+         "name": "bla",         
+         "databaseType": "mysql"
+    }
+ }
+ 

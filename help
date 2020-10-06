@@ -1,0 +1,1 @@
+swagger generate server -A WhatsAppApi -f ./swagger/swagger.yml

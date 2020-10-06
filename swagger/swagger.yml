@@ -38,7 +38,27 @@ paths:
           description: generic error response
           schema:
             $ref: "#/definitions/error"
-    
+  /sendMessage:
+    post:
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      tags:
+        - api
+      operationId: sendMessage
+      parameters:
+        - name: body
+          in: body
+          description: create a new message
+          required: true
+          schema:
+            $ref: "#/definitions/message"
+      responses: 
+          201:
+            description: Created
+            schema:
+              $ref: "#/definitions/message"
 definitions:
   message:
     type: object
