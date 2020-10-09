@@ -30,7 +30,7 @@ jobs:
       repository: whats-app-api-github
       release: gopher-api
       namespace: whats-app-api
-      chart:  whats-app-api-github/whatsAppApiChart/WebApiChart.tgz
+      chart:  whats-app-api-github/whatsAppApiChart/whatsAppApiChart-0.1.0.tgz
 
 
 
