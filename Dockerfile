@@ -24,6 +24,6 @@ WORKDIR /root/
 COPY --from=builder /app/cmd/whats-app-api-server/ .
 COPY appconfig.json .
 # Expose port 8080 to the outside world
-EXPOSE 8088
+EXPOSE 8080
 # Command to run the executable
 CMD ["./webapi"]
