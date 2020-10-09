@@ -3,6 +3,7 @@ module o2b.com.br/whatsAppApi
 go 1.15
 
 require (
+	github.com/ahmetb/go-linq v3.0.0+incompatible
 	github.com/go-openapi/errors v0.19.7
 	github.com/go-openapi/loads v0.19.5
 	github.com/go-openapi/runtime v0.19.22

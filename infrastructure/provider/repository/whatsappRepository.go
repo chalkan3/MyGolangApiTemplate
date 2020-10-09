@@ -14,6 +14,11 @@ type WhatsAppRepository struct {
 	connectionDB *sql.DB
 }
 
+// UpdateMessage update processed msg
+func (r *WhatsAppRepository) UpdateMessage(message *models.Message) {
+	r.connectionDB.Exec(querys.UpdateMessage(), message.ID)
+}
+
 // CreateNewMessage create new message
 func (r *WhatsAppRepository) CreateNewMessage(message *models.Message) *models.Message {
 	insertQuery, err := r.connectionDB.Prepare(querys.InsertNewMessage())
@@ -21,7 +26,11 @@ func (r *WhatsAppRepository) CreateNewMessage(message *models.Message) *models.M
 		panic(err.Error())
 	}
 
-	insertQuery.Exec(message.Body, false)
+	res, _ := insertQuery.Exec(message.Body, false)
+
+	id, _ := res.LastInsertId()
+	message.ID = id
+	message.Processed = false
 	return message
 
 }

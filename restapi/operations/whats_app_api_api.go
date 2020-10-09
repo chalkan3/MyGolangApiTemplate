@@ -50,6 +50,9 @@ func NewWhatsAppAPIAPI(spec *loads.Document) *WhatsAppAPIAPI {
 		APISendMessageHandler: apiops.SendMessageHandlerFunc(func(params apiops.SendMessageParams) middleware.Responder {
 			return middleware.NotImplemented("operation api.SendMessage has not yet been implemented")
 		}),
+		APISyncHandler: apiops.SyncHandlerFunc(func(params apiops.SyncParams) middleware.Responder {
+			return middleware.NotImplemented("operation api.Sync has not yet been implemented")
+		}),
 	}
 }
 
@@ -90,6 +93,8 @@ type WhatsAppAPIAPI struct {
 	APIGetMessagesHandler apiops.GetMessagesHandler
 	// APISendMessageHandler sets the operation handler for the send message operation
 	APISendMessageHandler apiops.SendMessageHandler
+	// APISyncHandler sets the operation handler for the sync operation
+	APISyncHandler apiops.SyncHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -171,6 +176,9 @@ func (o *WhatsAppAPIAPI) Validate() error {
 	}
 	if o.APISendMessageHandler == nil {
 		unregistered = append(unregistered, "api.SendMessageHandler")
+	}
+	if o.APISyncHandler == nil {
+		unregistered = append(unregistered, "api.SyncHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -272,6 +280,10 @@ func (o *WhatsAppAPIAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/sendMessage"] = apiops.NewSendMessage(o.context, o.APISendMessageHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/sync"] = apiops.NewSync(o.context, o.APISyncHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

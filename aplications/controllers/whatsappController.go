@@ -46,6 +46,12 @@ func (wc *WhatsAppController) CreateMessage(params apiops.SendMessageParams) mid
 	return apiops.NewSendMessageCreated().WithPayload(message)
 }
 
+// UpdateMessage create message
+func (wc *WhatsAppController) UpdateMessage(params apiops.SyncParams) middleware.Responder {
+	wc.service.UpdateMessage(params.Body)
+	return apiops.NewSyncCreated()
+}
+
 // NewWhatsAppController IoC
 func NewWhatsAppController(_service *services.WhatsAppService) *WhatsAppController {
 	return &WhatsAppController{

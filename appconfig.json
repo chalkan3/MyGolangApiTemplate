@@ -4,6 +4,29 @@
          "password": "root",    
          "name": "bla",         
          "databaseType": "mysql"
-    }
+    },
+
+    "rabbitmq": {
+          "user": "guest",    
+          "password": "guest",    
+          "port": "5672",         
+          "host": "localhost",
+          "queue": [
+               {
+                    "name": "process",
+                    "durable": false,
+                    "delete_when_unused": false,
+                    "exclusive": false,
+                    "no_wait": false
+               },
+               {
+                    "name": "backup",
+                    "durable": false,
+                    "delete_when_unused": false,
+                    "exclusive": false,
+                    "no_wait": false
+               }
+          ]
+}
  }
  

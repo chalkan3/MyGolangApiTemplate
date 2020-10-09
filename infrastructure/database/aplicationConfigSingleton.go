@@ -10,6 +10,7 @@ import (
 // AppConfig is a singleton to get configuration
 type AppConfig struct {
 	Database *Database `json:"database,omitempty"`
+	RabbitMQ *RabbitMQ `json:"rabbitmq,omitempty"`
 }
 
 var singleton *AppConfig

@@ -1,6 +1,8 @@
 package helpers
 
 import (
+	"encoding/json"
+	"log"
 	"reflect"
 
 	interfacecontroller "o2b.com.br/whatsAppApi/aplications/controllers/interface"
@@ -21,9 +23,25 @@ func (ch *ControllersHelper) GetController(funcName string) interfacecontroller.
 	return ch.controllers[funcName]
 }
 
+// JSONStringfy strinfy msg
+func JSONStringfy(i interface{}) string {
+
+	e, err := json.Marshal(i)
+	FailOnError(err, "JSONStringfy")
+	return string(e)
+
+}
+
 // InitiateControllers initiate new controller
 func (ch *ControllersHelper) InitiateControllers(funcName string) reflect.Type {
 	return reflect.TypeOf(ch.GetController(funcName))
+}
+
+// FailOnError handle the error
+func FailOnError(err error, msg string) {
+	if err != nil {
+		log.Println("%s: %s", msg, err)
+	}
 }
 
 // NewControllerHelper IoC
