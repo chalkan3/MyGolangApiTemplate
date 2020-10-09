@@ -107,6 +107,39 @@ func init() {
           }
         }
       }
+    },
+    "/sync": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "api"
+        ],
+        "operationId": "sync",
+        "parameters": [
+          {
+            "description": "create a new message",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -217,6 +250,39 @@ func init() {
           "api"
         ],
         "operationId": "sendMessage",
+        "parameters": [
+          {
+            "description": "create a new message",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        }
+      }
+    },
+    "/sync": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "api"
+        ],
+        "operationId": "sync",
         "parameters": [
           {
             "description": "create a new message",

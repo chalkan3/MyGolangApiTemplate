@@ -1,25 +1,83 @@
 version: '3'
 
 services:
-  mysqlsrv:
-    image: mysql:5.7
+  # mysqlsrv:
+  #   image: mysql:5.7
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: "root"
+  #     MYSQL_DATABASE: "bla"
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - /Users/igorguedes/Documents/DockerVolumes/Mysql:/var/lib/mysql
+  #   networks:
+  #     - mysql-compose-network
+
+  # adminer:
+  #   image: adminer
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - mysql-compose-network
+  
+  # rabbitmq:
+  #   image: "rabbitmq:3-management"
+  #   environment:
+  #     RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+  #     RABBITMQ_DEFAULT_USER: "guest"
+  #     RABBITMQ_DEFAULT_PASS: "guest"
+  #     RABBITMQ_DEFAULT_VHOST: "/"
+  #   ports:
+  #     - "15672:15672"
+  #     - "5672:5672"
+  #   networks:
+  #     - rabbit-network
+
+  # worker-process:
+  #   image: o2b/processworker:latest
+  #   ports:
+  #     - 9000:9000
+  #   networks:
+  #     - rabbit-network
+  #   depends_on:
+  #     - rabbitmq
+  #   links: 
+  #       - rabbitmq
+  #   restart: on-failure
+
+  concourse-db:
+    image: postgres
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "bla"
-    ports:
-      - "3306:3306"
-    volumes:
-      - /Users/igorguedes/Documents/DockerVolumes/Mysql:/var/lib/mysql
+      POSTGRES_DB: concourse
+      POSTGRES_PASSWORD: concourse_pass
+      POSTGRES_USER: concourse_user
+      PGDATA: /database
     networks:
-      - mysql-compose-network
+      - kind
 
-  adminer:
-    image: adminer
-    ports:
-      - 8080:8080
+  concourse:
+    image: concourse/concourse
+    command: quickstart
+    privileged: true
+    depends_on: [concourse-db]
+    ports: ["8080:8080"]
+    environment:
+      CONCOURSE_POSTGRES_HOST: concourse-db
+      CONCOURSE_POSTGRES_USER: concourse_user
+      CONCOURSE_POSTGRES_PASSWORD: concourse_pass
+      CONCOURSE_POSTGRES_DATABASE: concourse
+      CONCOURSE_EXTERNAL_URL: http://localhost:8080
+      CONCOURSE_ADD_LOCAL_USER: mainter:Igorgr123@1929
+      CONCOURSE_MAIN_TEAM_LOCAL_USER: mainter
+      CONCOURSE_WORKER_BAGGAGECLAIM_DRIVER: overlay
+      CONCOURSE_CLIENT_SECRET: Y29uY291cnNlLXdlYgo=
+      CONCOURSE_TSA_CLIENT_SECRET: Y29uY291cnNlLXdvcmtlcgo=
     networks:
-      - mysql-compose-network
-
-networks: 
+      - kind
+networks:
+  rabbit-network:
+    driver: bridge 
   mysql-compose-network:
     driver: bridge
+  kind:
+    external: true

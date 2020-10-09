@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "WhatsAppApi.fullname" . }}-test-connection"
+  labels:
+    {{- include "WhatsAppApi.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "WhatsAppApi.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
