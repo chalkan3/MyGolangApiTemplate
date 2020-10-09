@@ -1,8 +1,9 @@
 {
     "database": {
          "username": "root",    
-         "password": "root",    
-         "name": "bla",         
+         "password": "nGSLlxPe2y",    
+         "name": "bla", 
+         "host": "gopher-company-mysql.gopher-company-api.svc.cluster.local",      
          "databaseType": "mysql"
     },
 

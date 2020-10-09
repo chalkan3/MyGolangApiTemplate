@@ -8,14 +8,15 @@ import (
 
 // Database is my database struct
 type Database struct {
-	Username     string `json:"username"`
-	Password     string `json:"password"`
-	Name         string `json:"name"`
-	DatabaseType string `json:"databaseType"`
+	Username     string `json:"username,omitempty"`
+	Password     string `json:"password,omitempty"`
+	Name         string `json:"name,omitempty"`
+	Host         string `json:"host,omitempty"`
+	DatabaseType string `json:"databaseType,omitempty"`
 }
 
 func (database *Database) formatSQLConnection() string {
-	return database.Username + ":" + database.Password + "@/" + database.Name
+	return database.Username + ":" + database.Password + "@tcp(" + database.Host + ")/" + database.Name
 }
 
 // GetConnection get a database connection
