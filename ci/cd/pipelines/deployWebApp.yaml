@@ -15,8 +15,12 @@ resources:
     namespace: whatsapp-shared
     tillerless: true
     tillerless_silent: true
+# - name: whats-app-api-github
+#   type: git
+#   icon: github
+#   source:
+#     uri: https://github.com/chalkan3/MyGolangApiTemplate
 
-        
 jobs:
 - name: deploy-mysql
   plan:
@@ -24,13 +28,7 @@ jobs:
     params:
       release: mysql
       namespace: whats-app-api
-      chart: stable/mysql
-      override_values:
-      - key: mysqlUser
-        value: root
-      - key: mysqlPassword
-        value: Igorgr123@1929
-      - key: mysqlDatabase
-        value: bla
+      chart:  https://github.com/chalkan3/MyGolangApiTemplate/tree/master/whatsAppApiChart
+
 
 

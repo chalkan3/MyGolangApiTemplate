@@ -21,3 +21,26 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 1.16.0
+
+annotations:
+  artifacthub.io/crds: |
+    - kind: gopherCompany
+      version: v1
+      name: gopherCompany
+      displayName: Gopher Company
+      description: This is just for show how to use gorouties
+  artifacthub.io/crdsExamples: |
+    - apiVersion: v1
+      kind: gopherCompany
+      metadata:
+        name: gopherCompany
+      spec:
+        replicas: 1
+  artifacthub.io/links: |
+    - name: link1
+      url: https://github.com/chalkan3/MyGolangApiTemplate
+  artifacthub.io/maintainers: |
+    - name: Igor Guedes Rodrigues
+      email: ighyss@gmail.com
+  artifacthub.io/operator: "true"
+  artifacthub.io/operatorCapabilities: Basic Install
