@@ -42,7 +42,7 @@ jobs:
       repository: whats-app-api-github
       release: gopher-company-api
       namespace: gopher-company-api
-      chart:  whats-app-api-github/gopherapichart/charts/gopher-api-chart-0.1.0.tgz
+      chart:  whats-app-api-github/gopherapichart/charts/gopher-rest-0.1.0.tgz
   - put: helm 
     params:
       repository: gopher-sync-github
