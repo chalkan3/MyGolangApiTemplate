@@ -11,6 +11,7 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+      targetPort: 9000
       
   selector:
     {{- include "whatsAppApiChart.selectorLabels" . | nindent 4 }}
