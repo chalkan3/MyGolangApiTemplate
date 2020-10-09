@@ -5,11 +5,12 @@ metadata:
   labels:
     {{- include "whatsAppApiChart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: NodePort
   ports:
-    - port: {{ .Values.service.port }}
+    - port: 9000
       targetPort: http
       protocol: TCP
       name: http
+      
   selector:
     {{- include "whatsAppApiChart.selectorLabels" . | nindent 4 }}

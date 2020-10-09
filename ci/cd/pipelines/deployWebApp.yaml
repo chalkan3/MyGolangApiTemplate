@@ -41,20 +41,72 @@ jobs:
     params:
       repository: whats-app-api-github
       release: gopher-company-api
+      recreate_pods: true
       namespace: gopher-company-api
       chart:  whats-app-api-github/gopherapichart/charts/gopher-rest-0.1.0.tgz
+      override_values:
+        - key: proxy.useTLS
+          value: false,
+        - key: livenessProbe.httpGet.scheme=
+          value: HTTP,
+        - key: readinessProbe.httpGet.scheme
+          value: HTTP
+        - key: proxy.containerPort
+          value: 9000
+        - key: service.port
+          value: 9000
+        - key: service.internalPort
+          value: 9000
+        - key: service.externalPort
+          value: 9000
+
+
+
   - put: helm 
     params:
       repository: gopher-sync-github
       release: sync
+      recreate_pods: true
       namespace: gopher-company-workers
       chart:  gopher-sync-github/gophersync/charts/gopher-worker-sync-0.1.0.tgz
+      override_values:
+        - key: proxy.useTLS
+          value: false,
+        - key: livenessProbe.httpGet.scheme=
+          value: HTTP,
+        - key: readinessProbe.httpGet.scheme
+          value: HTTP
+        - key: proxy.containerPort
+          value: 9090
+        - key: service.internalPort
+          value: 9090
+        - key: service.externalPort
+          value: 9090
+
+
   - put: helm 
     params:
       repository: gopher-process-github
       release: process
       namespace: gopher-company-workers
+      recreate_pods: true
       chart:  gopher-process-github/processworker/charts/gopher-worker-process-0.1.0.tgz
+      override_values:
+        - key: proxy.useTLS
+          value: false,
+        - key: livenessProbe.httpGet.scheme=
+          value: HTTP,
+        - key: readinessProbe.httpGet.scheme
+          value: HTTP
+        - key: proxy.containerPort
+          value: 9001
+        - key: service.port
+          value: 9001
+        - key: service.internalPort
+          value: 9001
+        - key: service.externalPort
+          value: 9001
+      
 
 
 
