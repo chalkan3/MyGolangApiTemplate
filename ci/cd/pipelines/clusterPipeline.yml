@@ -5,7 +5,7 @@ resource_types:
     repository: linkyard/concourse-helm-resource
 
 resources:
-- name: helm
+- name: helm-deploy
   type: helm
   source:
     cluster_url: https://172.25.0.2:6443
@@ -32,5 +32,9 @@ jobs:
         value: 1
       - key: username
         value: rabbitmqadmin
+  - put: helm
+    params:
+      release: mysql
+      
 
 
