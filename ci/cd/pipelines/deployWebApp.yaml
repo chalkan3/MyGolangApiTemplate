@@ -15,20 +15,22 @@ resources:
     namespace: whatsapp-shared
     tillerless: true
     tillerless_silent: true
-# - name: whats-app-api-github
-#   type: git
-#   icon: github
-#   source:
-#     uri: https://github.com/chalkan3/MyGolangApiTemplate
+- name: whats-app-api-github
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/chalkan3/MyGolangApiTemplate
 
 jobs:
-- name: deploy-mysql
+- name: deploy-gopher-factory-api
   plan:
+  - get: whats-app-api-github
   - put: helm 
     params:
-      release: mysql
+      repository: whats-app-api-github
+      release: gopher-api
       namespace: whats-app-api
-      chart:  https://github.com/chalkan3/MyGolangApiTemplate/tree/master/whatsAppApiChart
+      chart:  whats-app-api-github/whatsAppApiChart/WebApiChart.tgz
 
 
 
