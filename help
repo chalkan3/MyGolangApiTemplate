@@ -1,8 +1,4 @@
 swagger generate server -A WhatsAppApi -f ./swagger/swagger.yml
 docker build -f Dockerfile  -t chalkan33/WhatsAppApi .
 docker push chalkan33/WhatsAppApi:latest 
-
-brew install jq
-
-
-kind get kubeconfig
+tar -cvf WebApiChart.tgz *
