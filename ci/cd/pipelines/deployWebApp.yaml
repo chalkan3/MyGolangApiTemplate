@@ -66,7 +66,7 @@ jobs:
     params:
       repository: gopher-sync-github
       release: sync
-      recreate_pods: true
+      #recreate_pods: true
       namespace: gopher-company-workers
       chart:  gopher-sync-github/gophersync/charts/gopher-worker-sync-0.1.0.tgz
       override_values:
@@ -89,7 +89,7 @@ jobs:
       repository: gopher-process-github
       release: process
       namespace: gopher-company-workers
-      recreate_pods: true
+     # recreate_pods: true
       chart:  gopher-process-github/processworker/charts/gopher-worker-process-0.1.0.tgz
       override_values:
         - key: proxy.useTLS
