@@ -16,7 +16,7 @@ type Database struct {
 }
 
 func (database *Database) formatSQLConnection() string {
-	return database.Username + ":" + database.Password + "@tcp(" + database.Host + ")/" + database.Name
+	return database.Username + ":" + database.Password + "@tcp(" + database.Host + ":3308)/" + database.Name
 }
 
 // GetConnection get a database connection

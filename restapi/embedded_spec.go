@@ -102,7 +102,7 @@ func init() {
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/message"
+              "$ref": "#/definitions/resp"
             }
           }
         }
@@ -135,7 +135,7 @@ func init() {
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/message"
+              "description": "OK"
             }
           }
         }
@@ -160,20 +160,79 @@ func init() {
     },
     "message": {
       "type": "object",
-      "required": [
-        "body"
-      ],
       "properties": {
-        "body": {
-          "type": "string",
-          "minLength": 1
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string"
+              },
+              "chat": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "token": {
+                "type": "object",
+                "properties": {
+                  "phone1": {
+                    "type": "string"
+                  },
+                  "phone2": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "event_date": {
+          "type": "string"
+        },
+        "event_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "event_time": {
+          "type": "string"
+        },
+        "host_name": {
+          "type": "string"
         },
         "id": {
           "type": "integer",
-          "format": "int64",
-          "readOnly": true
+          "format": "int64"
+        },
+        "idd": {
+          "type": "string"
         },
         "processed": {
+          "type": "boolean"
+        },
+        "severity": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "tool": {
+          "type": "string"
+        }
+      }
+    },
+    "resp": {
+      "type": "object",
+      "properties": {
+        "message_queued": {
           "type": "boolean"
         }
       }
@@ -265,7 +324,7 @@ func init() {
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/message"
+              "$ref": "#/definitions/resp"
             }
           }
         }
@@ -298,7 +357,7 @@ func init() {
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/message"
+              "description": "OK"
             }
           }
         }
@@ -306,6 +365,42 @@ func init() {
     }
   },
   "definitions": {
+    "MessageChannelsItems0": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string"
+        },
+        "chat": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "token": {
+          "type": "object",
+          "properties": {
+            "phone1": {
+              "type": "string"
+            },
+            "phone2": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "MessageChannelsItems0Token": {
+      "type": "object",
+      "properties": {
+        "phone1": {
+          "type": "string"
+        },
+        "phone2": {
+          "type": "string"
+        }
+      }
+    },
     "error": {
       "type": "object",
       "required": [
@@ -323,20 +418,57 @@ func init() {
     },
     "message": {
       "type": "object",
-      "required": [
-        "body"
-      ],
       "properties": {
-        "body": {
-          "type": "string",
-          "minLength": 1
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MessageChannelsItems0"
+          }
+        },
+        "event_date": {
+          "type": "string"
+        },
+        "event_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "event_time": {
+          "type": "string"
+        },
+        "host_name": {
+          "type": "string"
         },
         "id": {
           "type": "integer",
-          "format": "int64",
-          "readOnly": true
+          "format": "int64"
+        },
+        "idd": {
+          "type": "string"
         },
         "processed": {
+          "type": "boolean"
+        },
+        "severity": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "tool": {
+          "type": "string"
+        }
+      }
+    },
+    "resp": {
+      "type": "object",
+      "properties": {
+        "message_queued": {
           "type": "boolean"
         }
       }

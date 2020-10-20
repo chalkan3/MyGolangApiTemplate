@@ -152,7 +152,6 @@ func (s *Server) hasScheme(scheme string) bool {
 
 // Serve the api
 func (s *Server) Serve() (err error) {
-	s.Port = 9000
 	if !s.hasListeners {
 		if err = s.Listen(); err != nil {
 			return err

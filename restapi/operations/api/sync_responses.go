@@ -9,8 +9,6 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-
-	"o2b.com.br/whatsAppApi/models"
 )
 
 // SyncCreatedCode is the HTTP code returned for type SyncCreated
@@ -25,7 +23,7 @@ type SyncCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.Message `json:"body,omitempty"`
+	Payload interface{} `json:"body,omitempty"`
 }
 
 // NewSyncCreated creates SyncCreated with default headers values
@@ -35,13 +33,13 @@ func NewSyncCreated() *SyncCreated {
 }
 
 // WithPayload adds the payload to the sync created response
-func (o *SyncCreated) WithPayload(payload *models.Message) *SyncCreated {
+func (o *SyncCreated) WithPayload(payload interface{}) *SyncCreated {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the sync created response
-func (o *SyncCreated) SetPayload(payload *models.Message) {
+func (o *SyncCreated) SetPayload(payload interface{}) {
 	o.Payload = payload
 }
 
@@ -49,10 +47,8 @@ func (o *SyncCreated) SetPayload(payload *models.Message) {
 func (o *SyncCreated) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(201)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
+	payload := o.Payload
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
 	}
 }

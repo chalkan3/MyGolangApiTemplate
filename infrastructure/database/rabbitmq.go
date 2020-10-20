@@ -55,7 +55,7 @@ func (mq *RabbitMQ) declareQueue() (*amqp.Queue, *amqp.Channel, *amqp.Connection
 
 }
 func (mq *RabbitMQ) formatAmpqURI() string {
-	return "amqp://" + mq.User + mq.Password + "@" + mq.Host + ":" + mq.Port
+	return "amqp://" + mq.User + ":" + mq.Password + "@" + mq.Host + ":" + mq.Port
 
 }
 

@@ -6,10 +6,11 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // Message message
@@ -17,24 +18,48 @@ import (
 // swagger:model message
 type Message struct {
 
-	// body
-	// Required: true
-	// Min Length: 1
-	Body *string `json:"body"`
+	// actions
+	Actions []string `json:"actions"`
+
+	// channels
+	Channels []*MessageChannelsItems0 `json:"channels"`
+
+	// event date
+	EventDate string `json:"event_date,omitempty"`
+
+	// event id
+	EventID int64 `json:"event_id,omitempty"`
+
+	// event time
+	EventTime string `json:"event_time,omitempty"`
+
+	// host name
+	HostName string `json:"host_name,omitempty"`
 
 	// id
-	// Read Only: true
 	ID int64 `json:"id,omitempty"`
+
+	// idd
+	Idd string `json:"idd,omitempty"`
 
 	// processed
 	Processed bool `json:"processed,omitempty"`
+
+	// severity
+	Severity string `json:"severity,omitempty"`
+
+	// status
+	Status string `json:"status,omitempty"`
+
+	// tool
+	Tool string `json:"tool,omitempty"`
 }
 
 // Validate validates this message
 func (m *Message) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateBody(formats); err != nil {
+	if err := m.validateChannels(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -44,14 +69,26 @@ func (m *Message) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Message) validateBody(formats strfmt.Registry) error {
+func (m *Message) validateChannels(formats strfmt.Registry) error {
 
-	if err := validate.Required("body", "body", m.Body); err != nil {
-		return err
+	if swag.IsZero(m.Channels) { // not required
+		return nil
 	}
 
-	if err := validate.MinLength("body", "body", string(*m.Body), 1); err != nil {
-		return err
+	for i := 0; i < len(m.Channels); i++ {
+		if swag.IsZero(m.Channels[i]) { // not required
+			continue
+		}
+
+		if m.Channels[i] != nil {
+			if err := m.Channels[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("channels" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -68,6 +105,109 @@ func (m *Message) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (m *Message) UnmarshalBinary(b []byte) error {
 	var res Message
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
+	return nil
+}
+
+// MessageChannelsItems0 message channels items0
+//
+// swagger:model MessageChannelsItems0
+type MessageChannelsItems0 struct {
+
+	// channel
+	Channel string `json:"channel,omitempty"`
+
+	// chat
+	Chat string `json:"chat,omitempty"`
+
+	// language
+	Language string `json:"language,omitempty"`
+
+	// token
+	Token *MessageChannelsItems0Token `json:"token,omitempty"`
+}
+
+// Validate validates this message channels items0
+func (m *MessageChannelsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateToken(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *MessageChannelsItems0) validateToken(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Token) { // not required
+		return nil
+	}
+
+	if m.Token != nil {
+		if err := m.Token.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("token")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *MessageChannelsItems0) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *MessageChannelsItems0) UnmarshalBinary(b []byte) error {
+	var res MessageChannelsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
+	return nil
+}
+
+// MessageChannelsItems0Token message channels items0 token
+//
+// swagger:model MessageChannelsItems0Token
+type MessageChannelsItems0Token struct {
+
+	// phone1
+	Phone1 string `json:"phone1,omitempty"`
+
+	// phone2
+	Phone2 string `json:"phone2,omitempty"`
+}
+
+// Validate validates this message channels items0 token
+func (m *MessageChannelsItems0Token) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *MessageChannelsItems0Token) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *MessageChannelsItems0Token) UnmarshalBinary(b []byte) error {
+	var res MessageChannelsItems0Token
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -15,35 +15,22 @@ type WhatsAppController struct {
 // Get get messages
 func (wc *WhatsAppController) Get(params apiops.GetMessagesParams) middleware.Responder {
 
-	msg := []*models.Message{}
-	msgIgor := "msg from igor"
-	msgClaudio := "msg from gustavo"
-	msgGustavo := "msg from claudio"
-	msg = append(msg, &models.Message{
-		Body:      &msgIgor,
-		ID:        1,
-		Processed: true,
-	})
-
-	msg = append(msg, &models.Message{
-		Body:      &msgClaudio,
-		ID:        1,
-		Processed: false,
-	})
-
-	msg = append(msg, &models.Message{
-		Body:      &msgGustavo,
-		ID:        1,
-		Processed: true,
-	})
-
-	return apiops.NewGetMessagesOK().WithPayload(msg)
+	return apiops.NewGetMessagesOK()
 }
 
 // CreateMessage create message
 func (wc *WhatsAppController) CreateMessage(params apiops.SendMessageParams) middleware.Responder {
 	message := wc.service.CreateNewMessage(params.Body)
-	return apiops.NewSendMessageCreated().WithPayload(message)
+	if message != nil {
+		return apiops.NewSendMessageCreated().WithPayload(&models.Resp{
+			MessageQueued: true,
+		})
+	} else {
+		return apiops.NewSendMessageCreated().WithPayload(&models.Resp{
+			MessageQueued: false,
+		})
+	}
+
 }
 
 // UpdateMessage create message

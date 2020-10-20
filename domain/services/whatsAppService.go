@@ -20,7 +20,7 @@ func (s *WhatsAppService) publishToProcessQueue(message *models.Message) {
 // CreateNewMessage create new message
 func (s *WhatsAppService) CreateNewMessage(message *models.Message) *models.Message {
 	savedMessage := s.repository.CreateNewMessage(message)
-	s.publishToProcessQueue(message)
+	s.publishToProcessQueue(savedMessage)
 	return savedMessage
 }
 

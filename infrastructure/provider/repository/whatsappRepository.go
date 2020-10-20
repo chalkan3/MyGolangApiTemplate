@@ -26,7 +26,7 @@ func (r *WhatsAppRepository) CreateNewMessage(message *models.Message) *models.M
 		panic(err.Error())
 	}
 
-	res, _ := insertQuery.Exec(message.Body, false)
+	res, _ := insertQuery.Exec(message.Idd, false)
 
 	id, _ := res.LastInsertId()
 	message.ID = id

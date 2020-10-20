@@ -25,7 +25,7 @@ type SendMessageCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.Message `json:"body,omitempty"`
+	Payload *models.Resp `json:"body,omitempty"`
 }
 
 // NewSendMessageCreated creates SendMessageCreated with default headers values
@@ -35,13 +35,13 @@ func NewSendMessageCreated() *SendMessageCreated {
 }
 
 // WithPayload adds the payload to the send message created response
-func (o *SendMessageCreated) WithPayload(payload *models.Message) *SendMessageCreated {
+func (o *SendMessageCreated) WithPayload(payload *models.Resp) *SendMessageCreated {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the send message created response
-func (o *SendMessageCreated) SetPayload(payload *models.Message) {
+func (o *SendMessageCreated) SetPayload(payload *models.Resp) {
 	o.Payload = payload
 }
 
